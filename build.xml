@@ -1,0 +1,112 @@
+<project name="auto-shot" default="all" basedir="." >
+   <description>
+     IART project Auto-Shot.
+   </description>
+
+  <property file="build.properties"/>
+
+  <!-- Default property values, if not overridden elsewhere: -->
+  <property name="build" location="build" />
+  <property name="app.version" value="1.0"/>
+  <property name="app.name" value="Auto-Shot"/>
+  <property name="distro-name" value="auto-shot-${app.version}"/>
+  <tstamp><format property="build.time" pattern="yyyy-MM-dd HH:mm:ss"/></tstamp>
+
+  <path id="compile.classpath">
+    <fileset dir="libs">
+       <include name="*.jar"/>
+    </fileset>
+  </path>
+
+  <!-- Simply extends the compile.classpath with your own compiled classes. -->
+  <path id="run.classpath">
+    <path refid="compile.classpath"/>
+    <path location="src"/>
+  </path>
+  
+  <fileset id="class.files" dir="src">
+     <include name="**/*.class"/>
+  </fileset>
+
+  <fileset id="files.for.jar" dir="src">
+    <exclude name="**/*.java"/>
+  </fileset>
+  
+  <fileset id="test.classes" dir="src">
+    <include name="**/*Test.java"/>
+  </fileset>
+
+  <echo>
+    Application: ${app.name} ${app.version}
+    Build File : ${ant.file} 
+    Run Date   : ${build.time}
+    Run by     : ${user.name}
+    Build Dir  : ${build}
+    Base Dir   : ${basedir}
+    Java Home  : ${java.home}
+  </echo>
+    
+  <echo message="Create build directory, and its subdirectories."/>
+  <mkdir dir="${build}/dist"/>
+
+  <!-- Now define the targets, which use the properties and datatypes defined above. -->
+
+   <target name="clean" description="Delete all build artifacts." >
+     <delete dir="${build}"/>
+     <delete>
+      <fileset refid="class.files"/>
+     </delete>
+     <mkdir dir="${build}/dist"/>
+   </target>
+  
+   <target name="compile" description="Compile source files and place beside source.">
+     <javac srcdir="src">   
+       <classpath refid="compile.classpath"/>
+     </javac>
+   </target> 
+  
+   <target name="test" description="Run all JUnit tests." depends="compile">
+     <junit haltonfailure="false"> 
+       <classpath refid="run.classpath"/>
+       <batchtest>
+         <fileset refid="test.classes"/>
+       </batchtest>
+       <formatter type="brief" usefile="no"/>
+     </junit>
+   </target>
+  
+   <target name="jar" description="Create a jar file for distribution." depends="compile">
+      <copy todir="${build}/dist">
+        <fileset dir="libs">
+          <include name="*.jar"/>
+        </fileset>
+      </copy>
+    <jar destfile="${build}/dist/${distro-name}.jar" manifest="MANIFEST.MF" duplicate="preserve">
+      <fileset refid="files.for.jar"/>
+      <manifest>
+        <attribute name="Specification-Version" value="${app.version}"/> 
+        <attribute name="Specification-Title" value="${app.name}" />
+        <attribute name="Implementation-Version" value="${app.version}"/> 
+        <attribute name="Implementation-Title" value="${app.name}" />
+        <!-- TODO fix class path: attribute name="Class-Path" value="" /-->
+      </manifest>
+    </jar>
+   </target>
+  
+  <target name="distro-binary" description="Create zip file with executable jar." depends="jar">
+    <zip destfile="${build}/dist/${distro-name}-binary.zip" duplicate="preserve">
+      <zipfileset dir="${build}/dist/" includes="${distro-name}.jar"/>
+    </zip>
+  </target>
+  
+  <target name="distro-source" description="Create zip file with project source code.">
+    <zip destfile="${build}/dist/${distro-name}-src.zip" duplicate="preserve" >
+      <zipfileset dir="." excludes=".classpath, .project .idea"/>
+    </zip>
+  </target>
+  
+  <target name="all" description="Create all build artifacts." 
+             depends="clean, compile, test, jar, distro-binary, distro-source">
+    <echo>Finished creating all build artifacts.</echo>
+  </target>
+</project>

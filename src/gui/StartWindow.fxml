@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<GridPane id="StartGridPane" alignment="CENTER" cache="true" gridLinesVisible="false" hgap="10.0" maxHeight="-1.0"
+          maxWidth="-1.0" minHeight="-1.0" minWidth="-1.0" prefHeight="400.0" prefWidth="500.0" vgap="10.0"
+          xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="gui.StartWindowController">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+    </rowConstraints>
+    <Pane prefHeight="400.0" prefWidth="613.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
+        <Label layoutX="31.0" layoutY="33.0" text="Auto-Shot">
+            <font>
+                <Font size="96.0"/>
+            </font>
+        </Label>
+        <Button fx:id="buttonPlay" contentDisplay="CENTER" defaultButton="true" layoutX="231.0" layoutY="190.0"
+                mnemonicParsing="false" onAction="#handlePlayButtonAction" text="Play"/>
+        <Button fx:id="buttonAutoPlay" layoutX="179.0" layoutY="230.0" mnemonicParsing="false"
+                onAction="#handleAutoPlayButtonAction" text="Have the computer play"/>
+        <Button fx:id="buttonCancel" cancelButton="true" layoutX="233.0" layoutY="310.0" mnemonicParsing="false"
+                onAction="#handleExitButtonAction" text="Exit"/>
+        <Button layoutX="211.0" layoutY="270.0" mnemonicParsing="false" onAction="#handleLevelSelectButtonAction"
+                text="Select Level"/>
+    </Pane>
+</GridPane>

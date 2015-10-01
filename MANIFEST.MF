@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Permissions: sandbox
+JavaFX-Version: 8.0
+Class-Path: hamcrest-core-1.3.jar junit-4.12.jar
+Main-Class: gui.Main
