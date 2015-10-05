@@ -25,7 +25,7 @@ public class GameBoardTest {
 
         test.doMove(testMove, false);
 
-        if (test.getAvailableMoves().size() == 0) {
+        if (test.getAvailableMoves().size() != 0) {
             throw new Exception("There should not be any moves left!");
         }
 
