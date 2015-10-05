@@ -42,10 +42,10 @@ public class Main extends Application {
     /**
      * @param args Command line arguments
      */
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         logInfo("Application has started");
         Application.launch(Main.class, args);
-    }
+    }*/
 
     public static void exit() {
         logInfo("Application is exiting");
