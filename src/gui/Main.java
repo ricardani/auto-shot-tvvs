@@ -45,7 +45,7 @@ public class Main extends Application {
     /*public static void main(String[] args) {
         logInfo("Application has started");
         Application.launch(Main.class, args);
-    }*/
+    }*/    
 
     public static void exit() {
         logInfo("Application is exiting");
